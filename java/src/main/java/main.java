@@ -34,9 +34,18 @@ public class main {
                 int playerAction = Integer.parseInt(s);
                 result = b.add(playerAction);
 
-                if(result < 0) {
-                    System.out.println("Invalid action!");
-                    break;
+                while(result < 0) {
+                    System.out.println("Invalid action! - Try again");
+
+                    System.out.print("Put next cross at: ");
+                    s = scan.next().toLowerCase();
+
+                    if(s.equals("exit")) {
+                        break;
+                    }
+
+                    playerAction = Integer.parseInt(s);
+                    result = b.add(playerAction);
                 }
 
                 r.addAction(playerAction);
