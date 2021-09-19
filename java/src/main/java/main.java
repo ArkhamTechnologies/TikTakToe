@@ -4,7 +4,7 @@ public class main {
 
         int result = 0;
 
-        BoardConfiguration b = new BoardConfiguration();
+        Board b = new Board();
 
         System.out.println(b + " " + result);
 
