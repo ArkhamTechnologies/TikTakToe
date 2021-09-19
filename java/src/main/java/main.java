@@ -1,31 +1,63 @@
+import java.util.Scanner;
+
 public class main {
 
     public static void main(String[] args) {
 
+        Board b = new Board(true);
+        RandomPolicy r = new RandomPolicy();
+
+        Scanner scan = new Scanner(System.in);
+
         int result = 0;
 
-        Board b = new Board();
+        int round = 0;
 
-        System.out.println(b + " " + result);
+        System.out.println("TicTacToe\n");
 
-        result =b.add(0, 0);
+        System.out.println(
+                "Inputs:\n" +
+                        "exit \t- Exit program\n" +
+                        "0-8 \t- Location of cross you want to put\n"
+        );
 
-        System.out.println(b + " " + result);
+        while(result < 1 && round < 9) {
 
-        result =b.add(0, 1);
+            if(round % 2 == 0) {
+                System.out.print("Put next cross at: ");
+                String s = scan.next().toLowerCase();
 
-        System.out.println(b + " " + result);
+                if(s.equals("exit")) {
+                    break;
+                }
 
-        result =b.add(1, 0);
+                int playerAction = Integer.parseInt(s);
+                result = b.add(playerAction);
 
-        System.out.println(b + " " + result);
+                if(result < 0) {
+                    System.out.println("Invalid action!");
+                    break;
+                }
 
-        result =b.add(0, 2);
+                r.addAction(playerAction);
+                round++;
+            } else {
+                int newAction = r.getAction();
+                result = b.add(newAction);
+                round++;
+            }
+        }
 
-        System.out.println(b + " " + result);
+        if(result == 1) {
+            System.out.println("You won!");
+        } else if(result == 2) {
+            System.out.println("Computer won!");
+        } else if(result == 0){
+            System.out.println("Draw!");
+        }
 
-        result = b.add(2, 0);
+        System.out.println("Game ended!");
 
-        System.out.println(b + " " + result);
+
     }
 }
