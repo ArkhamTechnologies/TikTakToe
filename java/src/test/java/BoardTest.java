@@ -1,5 +1,6 @@
 import org.junit.Test;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 public class BoardTest {
@@ -9,10 +10,6 @@ public class BoardTest {
     public void basicTest() {
 
         Board b = new Board();
-
-        assertEquals("zero state", 0, b.getState());
-
-
     }
 
     @Test
@@ -20,16 +17,16 @@ public class BoardTest {
 
         Board b = new Board(verbose);
 
-        int result = b.add(0, 0);
-        assertEquals(0, result);
+        GameStates result = b.add(0, 0);
+        assertEquals(GameStates.ONGOING, result);
         result = b.add(0, 1);
-        assertEquals(0, result);
+        assertEquals(GameStates.ONGOING, result);
         result = b.add(1, 0);
-        assertEquals(0, result);
+        assertEquals(GameStates.ONGOING, result);
         result =b.add(0, 2);
-        assertEquals(0, result);
+        assertEquals(GameStates.ONGOING, result);
         result = b.add(2, 0);
-        assertEquals(1, result);
+        assertEquals(GameStates.CROSS_WIN, result);
     }
 
     @Test
@@ -37,18 +34,34 @@ public class BoardTest {
 
         Board b = new Board(verbose);
 
-        int result = b.add(2, 2);
-        assertEquals(0, result);
+        GameStates result = b.add(2, 2);
+        assertEquals(GameStates.ONGOING, result);
         result = b.add(1, 0);
-        assertEquals(0, result);
+        assertEquals(GameStates.ONGOING, result);
         result = b.add(0, 1);
-        assertEquals(0, result);
+        assertEquals(GameStates.ONGOING, result);
         result =b.add(2, 0);
-        assertEquals(0, result);
+        assertEquals(GameStates.ONGOING, result);
         result = b.add(0, 2);
-        assertEquals(0, result);
+        assertEquals(GameStates.ONGOING, result);
         result = b.add(0, 0);
-        assertEquals(2, result);
+        assertEquals(GameStates.ONGOING, result);
+    }
+
+    @Test
+    public void deepcopyTest() {
+
+        Board b = new Board(verbose);
+
+        GameStates result = b.add(2, 2);
+
+        Board newBoard = b.deepcopy();
+
+        assertEquals(false, b == newBoard);
+
+        assertArrayEquals(b.getBoard(), newBoard.getBoard());
+
+        assertEquals(b.getRound(), newBoard.getRound());
     }
 
 }

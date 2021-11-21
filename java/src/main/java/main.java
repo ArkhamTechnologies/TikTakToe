@@ -9,9 +9,7 @@ public class main {
 
         Scanner scan = new Scanner(System.in);
 
-        int result = 0;
-
-        int round = 0;
+        GameStates result = GameStates.ONGOING;
 
         System.out.println("TicTacToe\n");
 
@@ -21,9 +19,9 @@ public class main {
                         "0-8 \t- Location of cross you want to put\n"
         );
 
-        while(result < 1 && round < 9) {
+        while(result.equals(GameStates.ONGOING)) {
 
-            if(round % 2 == 0) {
+            if(b.getRound() % 2 == 0) {
                 System.out.print("Put next cross at: ");
                 String s = scan.next().toLowerCase();
 
@@ -34,7 +32,7 @@ public class main {
                 int playerAction = Integer.parseInt(s);
                 result = b.add(playerAction);
 
-                while(result < 0) {
+                while(result.equals(GameStates.INVALID)) {
                     System.out.println("Invalid action! - Try again");
 
                     System.out.print("Put next cross at: ");
@@ -48,20 +46,22 @@ public class main {
                     result = b.add(playerAction);
                 }
 
+                double prob = new Dynamic(b).calculateExpectedCrossWinRate(playerAction);
+
+                System.out.println(prob);
+
                 r.addAction(playerAction);
-                round++;
             } else {
                 int newAction = r.getAction();
                 result = b.add(newAction);
-                round++;
             }
         }
 
-        if(result == 1) {
+        if(result.equals(GameStates.CROSS_WIN)) {
             System.out.println("You won!");
-        } else if(result == 2) {
+        } else if(result.equals(GameStates.CIRCLE_WIN)) {
             System.out.println("Computer won!");
-        } else if(result == 0){
+        } else if(result.equals(GameStates.DRAW)){
             System.out.println("Draw!");
         }
 
