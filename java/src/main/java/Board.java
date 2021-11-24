@@ -36,7 +36,7 @@ public class Board {
         return verbose;
     }
 
-    public boolean isValidMove(int ij) {
+    public boolean isInvalidMove(int ij) {
         return !this.board[ij].equals(BoardConstants.EMPTY);
     }
 
@@ -47,7 +47,7 @@ public class Board {
 
     public GameStates add(int i, int j) {
 
-        if(isValidMove(i * Constants.N_FIELDS + j)) {
+        if(isInvalidMove(i * Constants.N_FIELDS + j)) {
             return GameStates.INVALID;
         }
 

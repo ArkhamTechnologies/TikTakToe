@@ -1,8 +1,8 @@
-public class Dynamic {
+public class DynamicRandom {
 
     private final Board board;
 
-    public Dynamic(Board board) {
+    public DynamicRandom(Board board) {
         this.board = board.deepcopy();
     }
 
@@ -21,14 +21,14 @@ public class Dynamic {
             int count = 0;
 
             for(int i = 0; i < 9; i++) {
-                if(board.isValidMove(i)) {
-                    Dynamic dynamic = new Dynamic(board);
-                    sum += dynamic.calculateExpectedCrossWinRate(i);
+                if(!board.isInvalidMove(i)) {
+                    DynamicRandom dynamicRandom = new DynamicRandom(board);
+                    sum += dynamicRandom.calculateExpectedCrossWinRate(i);
                     count++;
                 }
             }
 
-            return sum / count;
+            return count > 0 ? sum / count : 0;
         }
     }
 }

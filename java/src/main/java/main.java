@@ -46,7 +46,7 @@ public class main {
                     result = b.add(playerAction);
                 }
 
-                double prob = new Dynamic(b).calculateExpectedCrossWinRate(playerAction);
+                double prob = new DynamicRandom(b).calculateExpectedCrossWinRate(playerAction);
 
                 System.out.println(prob);
 
